@@ -1,0 +1,74 @@
+
+public class Partition {
+
+    public static void main(String[] args) {
+
+        int arr[] = new int[]{3,8,10,12,6,7,1,9};
+        
+        int low = 0;
+        int high = arr.length  -1;
+        
+        Partition.quickSort(arr, low, high);
+        for(int i = 0; i < arr.length; i++){
+            System.out.print(arr[i] + " ");
+        }
+    }
+
+    static void swap(int[] arr, int i , int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    // Lomento PArtition
+    /*
+    static int partition(int arr[] ,int low, int high){
+        
+        int pivot = arr[high];
+        
+        int j = low - 1;
+        for (int i = low; i <= high-1; i ++){
+            if ( arr[i] < pivot){
+                int temp = arr[i];
+                arr[i] = arr[j+1];
+                arr[j+1] = temp;
+                j ++;
+            }
+        }int temp = arr[high];
+        arr[high] = arr[j+1];
+        arr[j+1] = temp;
+        
+        return ++j;
+    }
+        */
+
+    // Hoare Partition
+
+    static int partition(int[] arr, int low, int high){
+        int rand_num = (int)Math.floor(Math.random()*(high-low+1)+low);
+        Partition.swap(arr, low, rand_num);
+        int pivot = arr[low];
+        int left = low  - 1;
+        int right = high + 1;
+        while ( true){
+            do{
+                left ++;
+            }while ( arr[left] < pivot);
+            do{
+                right -- ;
+            }while (arr[right] > pivot);
+            if ( left >= right)
+                return right;
+            Partition.swap(arr, left, right);
+        }
+        
+    }
+    static void quickSort(int[] arr, int low, int high){
+        if ( low < high){
+            int p = Partition.partition(arr, low, high);
+            quickSort(arr, low, p);
+            quickSort(arr, p+1, high);
+        }
+        
+    }
+    
+}
