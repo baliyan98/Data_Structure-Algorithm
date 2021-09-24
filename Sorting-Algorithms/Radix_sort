@@ -1,0 +1,42 @@
+public class RadixSort {
+    public static void main(String[] args) {
+        
+        int[] arr= new int[]{34,65,12,78,112,234,56,98,23};
+        int n = arr.length;
+        RadixSort.Radixsort(arr, n);
+        for(int i = 0; i < n ; i++)
+            System.out.print(arr[i] + " ");
+    }
+
+    static void Radixsort(int[] arr, int n){
+        int max = arr[0];
+        for (int i = 1; i < n ; i++){
+            if ( arr[i] > max){
+                max = arr[i];
+            }
+        }
+        for (int exp = 1; max/exp > 0; exp = exp * 10){
+            RadixSort.CountingSort(arr, n, exp);
+        }
+    }
+    static void CountingSort(int[] arr, int n, int key){
+        int[] count = new int[10];
+        int[] output = new int[n];
+        for (int i = 0; i < 10; i++){
+            count[i] = 0;
+        }
+        for(int i = 0; i < n ; i++){
+            count[(arr[i] / key) % 10] ++;
+        }
+        for(int i = 1; i < 10; i++){
+            count[i] = count[i] + count[i-1];
+        }
+        for(int i = n-1; i >= 0 ; i--){
+            output[count[(arr[i] / key) % 10] - 1] = arr[i];
+            count[(arr[i] / key) % 10] --;
+        }
+        for(int i = 0; i < n; i++){
+            arr[i] = output[i];
+        }
+    }
+}
