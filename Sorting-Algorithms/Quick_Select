@@ -1,0 +1,45 @@
+
+
+public class QuickSelect {
+    public static void main(String[] args) {
+        
+        int[] arr = new int[]{5,8,6,7,2,4,3,9,1};
+        int n =  arr.length;
+        int key = 6;
+        System.out.print(QuickSelect.quickSelect(arr, n, key));
+    }
+    static int quickSelect(int[] arr, int n , int key){
+        int low = 0;
+        int high = n - 1;
+        while ( low <= high){
+            int res = QuickSelect.parttion(arr, low, high);
+            
+            if ( res == key - 1)
+                return arr[res];
+            else if ( res > key -1)
+                high = res  - 1;
+            else 
+                low = res + 1;
+        }
+        return -1;
+    }
+    static int parttion(int[] arr, int low, int high){
+        int i = low  - 1;
+        int j = high + 1;
+        int pivot = arr[low];
+        while ( true){
+            do{
+                i ++;
+            }while ( arr[i] < pivot);
+            do {
+                j -- ;
+            }while ( arr[j] > pivot);
+            if ( i >= j)
+                return j;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+
+    }
+}
